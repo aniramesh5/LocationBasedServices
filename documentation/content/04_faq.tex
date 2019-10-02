@@ -1,0 +1,74 @@
+\chapter{FAQ}
+\label{ch:FAQ}
+
+\section{1.Lehrveranstaltung}
+\label{ch:FAQ:sec:1.Lehrveranstaltung}
+
+
+\subsection{Begriffe}
+Wie lassen sich die folgenden Begriffe (grob) und in Hinblick auf die zu erstellende NaviApp erläutern?
+
+\begin{description}
+	\item[Dijkstra] Langsamer routenfindungsalgorithmus, welcher die kürzerste Route findet
+	\item[A*] Wie Dijkstra, aber schneller dank Heuristik welche bestimmt ob der nächste Knoten in der richtigen Richtung liegt
+	\item[Zusammenhängender Graph] Jeder Knoten ist über eine Folge von Kanten zu erreichen.
+	\item[(ESRI) World File] The generic meaning of the six parameters in a world file (as defined by Esri[1]) is:
+Definition der Affin-transformation
+
+\begin{itemize}
+	\item Line 1: A: pixel size in the x-direction in map units/pixel
+	\item Line 2: D: rotation about y-axis
+	\item Line 3: B: rotation about x-axis
+	\item Line 4: E: pixel size in the y-direction in map units, almost always negative
+	\item Line 5: C: x-coordinate of the center of the upper left pixel
+	\item Line 6: F: y-coordinate of the center of the upper left pixel
+\end{itemize}
+
+	\item [Georeferenzieren] Das zuordnen von Daten zu Geodaten (Koordinaten)
+	
+	\item[Laplace Matrix] ist in der Graphentheorie eine Matrix, welche die Beziehungen der Knoten und Kanten eines Graphen beschreibt. Sie wird unter anderem zur Berechnung der Anzahl der Spannbäume und zur Abschätzung der Expansivität regulärer Graphen benutzt. Sie ist eine diskrete Version des Laplace-Operators. Man kann durch diese bestimmen, ob wir einen Zusammenhängenden Graphen haben.
+	
+	\item[Satz von Fiedler] Beschreibt wieviele Knoten ich habe.
+	
+	\item[k-d Baum] ein k-dimensionaler Baum. Er kann leicht unbalanciert sein und in unserer Anwendung ist es eher ein $k^{2}$ Baum.
+	
+	\item[Kachelung einer Karte] Überführen der Karte in kleinere Teile welche die Kacheln darstellen. Die Kacheln können auch thematisch sein. Z.b. Highways und Urban.
+	
+	\item[Ameisenalgorithmus] gehören zu den Metaheuristiken für Verfahren der kombinatorischen Optimierung, die auf dem modellhaften Verhalten von realen Ameisen bei der Futtersuche basieren. Die meisten Ameisenalgorithmen erfüllen auch die von Marco Dorigo vorgestellte ACO (Ant Colony Optimization)-Metaheuristik. 
+	
+	\item[Adjazenzmatrix] eines Graphen ist eine Matrix, die speichert, welche Knoten des Graphen durch eine Kante verbunden sind. Sie besitzt für jeden Knoten eine Zeile und eine Spalte, woraus sich für n Knoten eine $n\times n$-Matrix ergibt. Ein Eintrag in der i-ten Zeile und j-ten Spalte gibt hierbei an, ob eine Kante von dem i-ten zu dem j-ten Knoten führt. Steht an dieser Stelle eine 0, ist keine Kante vorhanden – eine 1 gibt an, dass eine Kante existiert[1], siehe Abbildung rechts.
+	
+	\item[Adjazenzlisten] (oder auch Nachbarschaftslisten) eine Möglichkeit, Graphen zu repräsentieren. Dabei wird für jeden Knoten eine Liste, die Adjazenzliste, aller seiner Nachbarn (in ungerichteten Graphen) bzw. Nachfolger (in gerichteten Graphen) angegeben. Oft basieren Datenstrukturen für Graphen auf Adjazenzlisten. Im einfachsten Fall wird in einem Array für jeden Knoten eine einfach verkettete Liste aller Nachbarn gespeichert.
+
+	\item[Shapefile] Vektorielle Geodaten welche nach "Themen" in verschiedenen Datein gespeichert ist.
+	
+	\item[Mapmatching] beschreibt das abgleichen der gemessenen Daten mit einer gespeicherten Karten. Beides kann Fehler haben.
+\end{description}
+
+
+\subsection{Mapping Toolbox}
+(nicht im Skript )
+
+\begin{description}
+	\item[Unitsration] Umrechnung von einer Einheit in andere Einheit für dieses Shapefile
+	\item[Geoshow] Darstellung von Geographischen koordinaten
+	\item[Mapshow] Darstellung von Kartendaten welche Projezierten Daten, welche z.B. von Shapefiles kommen, entsprechen
+	\item[projinv] (mit Angabe der Übergabeparameter) Macht die Projektion, welche zur Map führt wieder rückgängig.
+	\item[geotiffinfo] (mit Angabe der Übergabeparameter) Enthält die Projektionsparameter für das zugrundelegende Tiff. Diese Prarameter können dann in projinv verwendet werden.
+	\item[shaperead] Vermutlich externe bib, welche shape-Datein einliest und die Möglichkeit bietet die Daten beim einlesen schon zu filter.
+	\begin{lstlisting}[caption=shaperead.m, language=matlab, label=shaperead]
+	S = shaperead('concord_roads.shp','Selector',... 
+	{@(v1,v2) (v1 >= 4) && (v2 >= 200),'CLASS','LENGTH'} )
+	\end{lstlisting}
+	
+\end{description}
+
+Wie lassen sich die einzelnen Schritte aus Aufgabe P1-A1 (von projizierten NAD83 Koordinaten zu geographischen Koordinaten) stichpunktartig erläutern?
+Wie lassen sich folgende Funktionen und Methoden erläutern?
+
+
+
+
+%S = shaperead('concord_roads.shp','Selector',... {@(v1,v2) (v1 >= 4) && (v2 >= 200),'CLASS','LENGTH'} )
+%Was steht in dem Shapefile boston_roads.shp in den Feldern X und Y?  
+

@@ -6,28 +6,34 @@ A Shapefile contains either Points, Lines or Polygons and is managed by ESRI. Th
 \section{Structure}
 \label{ch:shapefile:sec:structure}
 
-\textbf{Required:}
+\subsection{Required}
 \begin{labeling}[:]{*.shp}
     \item[*.shp]Contains the geometry data
     \item[*.dbf]To safe further attributes like street classes
     \item[*.shx]Index to connect geometry and attributes
 \end{labeling}
 
-\textbf{Optional:}
+\subsection{Optional}
 \begin{itemize}
-    \item Projections data
+    \item Projection data
     \item Spacial indexfile to speed up a search
 \end{itemize}
 
 Shapefiles mostly get converted to graphs.
+But the coordinates in the shapefile should get converted to geocoordinates before they get saved as graphs.
+For that it is necessary to get the projection data from the shape file.
+These information are in a *.tif file.
+Sometimes the units are different from the metric system and need to be transformed to meter.
+A sample how to transform a shapefile in geocoordinates can be found in appendix \ref{TransformShapeFile}.
 
-\newpage
-
-\section{World file}
+\section{Worldfile}
+\label{sec:worldfile}
 Contains georeferenzdata for the corresponding picture in form of an Affintransformation.
-With this transformation one can transform the pixelcoordinates to geographic coordinates. \\
+With this transformation one can transform the pixelcoordinates to geographic coordinates. \par
 The worldfile can be calculated by control points (passpunkte). A Algorithm how to implement
-the calculation with an equation system can be found at Appendix \ref{source:calcworldfile}.
+the calculation with an equation system can be found in appendix \ref{CalculateWorldfile}.
+\par
+A worldfile typical has six values (Because it contains the values of an Affintransformation).
 
 \begin{labeling}[:]{A}
     \item[A]Pixel size in the x-direction in map units/pixel

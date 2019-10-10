@@ -1,0 +1,52 @@
+\chapter{Shapefile}
+\label{ch:shapefile}
+
+A Shapefile contains either Points, Lines or Polygons and is managed by ESRI. The data is present as vectors.
+
+\section{Structure}
+\label{ch:shapefile:sec:structure}
+
+\textbf{Required:}
+\begin{labeling}[:]{*.shp}
+    \item[*.shp]Contains the geometry data
+    \item[*.dbf]To safe further attributes like street classes
+    \item[*.shx]Index to connect geometry and attributes
+\end{labeling}
+
+\textbf{Optional:}
+\begin{itemize}
+    \item Projections data
+    \item Spacial indexfile to speed up a search
+\end{itemize}
+
+Shapefiles mostly get converted to graphs.
+
+\newpage
+
+\section{World file}
+Contains georeferenzdata for the corresponding picture in form of an Affintransformation.
+With this transformation one can transform the pixelcoordinates to geographic coordinates. \\
+The worldfile can be calculated by control points (passpunkte). A Algorithm how to implement
+the calculation with an equation system can be found at Appendix \ref{source:calcworldfile}.
+
+\begin{labeling}[:]{A}
+    \item[A]Pixel size in the x-direction in map units/pixel
+    \item[D]Rotation about y-axis
+    \item[B]Rotation about x-axis
+    \item[E]Pixel size in the y-direction in map units, almost always negative[3]
+    \item[C]x-coordinate of the center of the upper left pixel
+    \item[F]y-coordinate of the center of the upper left pixel
+\end{labeling}
+
+
+or
+
+\begin{labeling}[:]{A}
+    \item[A]x-component of the pixel width (x-scale)
+    \item[D]y-component of the pixel width (y-skew)
+    \item[B]x-component of the pixel height (x-skew)
+    \item[E]y-component of the pixel height (y-scale), typically negative
+    \item[C]x-coordinate of the center of the original image's upper left pixel transformed to the map
+    \item[F]y-coordinate of the center of the original image's upper left pixel transformed to the map
+\end{labeling}
+

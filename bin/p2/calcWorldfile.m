@@ -1,6 +1,6 @@
 function worldfile = calcWorldfile(pathToCsv)
 
-csv = csvread(pathToCsv)
+csv = csvread(pathToCsv);
 
 u = csv(:,1);
 v = csv(:,2);

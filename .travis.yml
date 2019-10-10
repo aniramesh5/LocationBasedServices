@@ -8,10 +8,11 @@ install:
     - bibtex 00_master
     - pdflatex 00_master.tex
     - pdflatex 00_master.tex
+    - pwd
 deploy:
     provider: releases
     api_key: $GITHUB_TOKEN
-    file: ./documentation/00_master.pdf
+    file: 00_master.pdf
     skip_cleanup: true
     on:
         tags: true

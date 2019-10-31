@@ -5,57 +5,137 @@ crossingPoints = [];
 % the connections between new crossing points
 additionalEdges = [];
 
+firstPoints = [];
+
 j = 0;
 
     numberOfEntries = length(adjacent);
     
-    for roadIndex = 1 : numberOfEntries-1 % rows (down)
-        for roadIndexForward = roadIndex : numberOfEntries % columns (right)
-            
-            if roadIndex + numberOfEntries/2 ~= roadIndexForward && adjacent(roadIndex, roadIndexForward) > 0% if not already known edge
+    for nodeIndex = 1 : numberOfEntries-1 % rows (down)
+        for nodeIndexForward = nodeIndex + 1 : numberOfEntries % columns (right)
+            if adjacent(nodeIndex, nodeIndexForward) > 0 && (nodeIndex + numberOfEntries/2) ~= nodeIndexForward  % if not already known edge
+                
+                
+                if nodeIndex <= numberOfEntries/2 % if in upper half
+                    if nodeIndexForward <= numberOfEntries/2 % if in upper half and left
+                        
+                        newCrossingStart.Lat = shapefile(nodeIndex).Lat(1);
+                        newCrossingStart.Lon = shapefile(nodeIndex).Lon(1);
+                        newCrossingStart.Geometry = 'Point';
+                        
+                        newCrossingEnd.Lat = shapefile(nodeIndexForward).Lat(1);
+                        newCrossingEnd.Lon = shapefile(nodeIndexForward).Lon(1);
+                        newCrossingEnd.Geometry = 'Point';
+                        
+                        % creating a new entry in a shape of lines
+                        additionalEdge.Lat = [shapefile(nodeIndex).Lat(1), shapefile(nodeIndexForward).Lat(1)]
+                        additionalEdge.Lon = [shapefile(nodeIndex).Lon(1), shapefile(nodeIndexForward).Lon(1)]
+                        additionalEdge.Geometry = 'Line';
+                        
+                    else % in upper half and right
+                        
+                        newCrossingStart.Lat = shapefile(nodeIndex).Lat(1);
+                        newCrossingStart.Lon = shapefile(nodeIndex).Lon(1);
+                        newCrossingStart.Geometry = 'Point';
+                        
+                        newCrossingEnd.Lat = shapefile(nodeIndexForward - numberOfEntries/2).Lat(end - 1);
+                        newCrossingEnd.Lon = shapefile(nodeIndexForward - numberOfEntries/2).Lon(end - 1);
+                        newCrossingEnd.Geometry = 'Point';
+                    
+                        additionalEdge.Lat = [shapefile(nodeIndex).Lat(1), shapefile(nodeIndexForward  - numberOfEntries/2).Lat(end - 1)]
+                        additionalEdge.Lon = [shapefile(nodeIndex).Lon(1), shapefile(nodeIndexForward  - numberOfEntries/2).Lon(end - 1)]
+                        additionalEdge.Geometry = 'Line';
+                    end
+                else % in lower half only right possible
+                    
+                        newCrossingStart.Lat = shapefile(nodeIndex - numberOfEntries/2).Lat(end - 1);
+                        newCrossingStart.Lon = shapefile(nodeIndex - numberOfEntries/2).Lon(end - 1);
+                        newCrossingStart.Geometry = 'Point';
+                        
+                        newCrossingEnd.Lat = shapefile(nodeIndexForward - numberOfEntries/2).Lat(end - 1);
+                        newCrossingEnd.Lon = shapefile(nodeIndexForward - numberOfEntries/2).Lon(end - 1);
+                        newCrossingEnd.Geometry = 'Point';
+                        
+                        additionalEdge.Lat = [shapefile(nodeIndex  - numberOfEntries/2).Lat(end - 1), shapefile(nodeIndexForward  - numberOfEntries/2).Lat(end - 1)]
+                        additionalEdge.Lon = [shapefile(nodeIndex  - numberOfEntries/2).Lon(end - 1), shapefile(nodeIndexForward  - numberOfEntries/2).Lon(end - 1)]
+                        additionalEdge.Geometry = 'Line';
+                end
+                
+                crossingPoints = [crossingPoints; newCrossingStart; newCrossingEnd];
+                additionalEdges = [additionalEdges; additionalEdge];
+                
+                
+                
+                
                 j = j+1;
-                if roadIndex <= numberOfEntries/2 % if in upper half of adjacent matrix
-                    firstX = shapefile(roadIndex).X(1);
-                    firstY = shapefile(roadIndex).Y(1);
-                else
-                    firstX = shapefile(roadIndex - numberOfEntries/2).X(end - 1);
-                    firstY = shapefile(roadIndex - numberOfEntries/2).Y(end - 1);
-                end
-                           
-                firstNewCrossingPoint.long = firstX;
-                firstNewCrossingPoint.lat = firstY;
-                firstNewCrossingPoint.Geometry = 'Point';
-                
-                if roadIndexForward <= numberOfEntries/2 % if in upper half of adjacent matrix
-                    secondX = shapefile(roadIndexForward).X(1);
-                    secondY = shapefile(roadIndexForward).Y(1);
-                else
-                    secondX = shapefile(roadIndexForward - numberOfEntries/2).X(end - 1);
-                    secondY = shapefile(roadIndexForward - numberOfEntries/2).Y(end - 1);
-                end
-                
-                secondNewCrossingPoint.long = secondX;
-                secondNewCrossingPoint.lat = secondY;
-                secondNewCrossingPoint.Geometry = 'Point';
-                
-                crossingPoints = [crossingPoints; firstNewCrossingPoint; secondNewCrossingPoint];
-               
-                nextAdditionalEdge.long = [firstX, secondX];
-                nextAdditionalEdge.lat = [firstY, secondY];
-                nextAdditionalEdge.Geometry = 'Line';
-                
-                additionalEdges = [additionalEdges; nextAdditionalEdge];
+%                 if nodeIndex <= numberOfEntries/2 % if in upper half of adjacent matrix
+%                     firstX = shapefile(nodeIndex).Lat(1);
+%                     firstY = shapefile(nodeIndex).Lon(1);
+%                 else
+%                     firstX = shapefile(nodeIndex - numberOfEntries/2).Lat(end - 1);
+%                     firstY = shapefile(nodeIndex - numberOfEntries/2).Lon(end - 1);
+%                 end
+%                             
+%                 firstNewCrossingPoint.Lat = firstX;
+%                 firstNewCrossingPoint.Lon = firstY;
+%                 firstNewCrossingPoint.Geometry = 'Point';
+%                 
+%                 
+%                 
+%                 
+%                 if nodeIndexForward <= numberOfEntries/2 % if in upper half of adjacent matrix
+%                     secondX = shapefile(nodeIndexForward).Lat(1);
+%                     secondY = shapefile(nodeIndexForward).Lon(1);
+%                 else
+%                     secondX = shapefile(nodeIndexForward - numberOfEntries/2).Lat(end - 1);
+%                     secondY = shapefile(nodeIndexForward - numberOfEntries/2).Lon(end - 1);
+%                 end 
+%                 
+%                 secondNewCrossingPoint.Lat = secondX;
+%                 secondNewCrossingPoint.Lon = secondY;
+%                 secondNewCrossingPoint.Geometry = 'Point';
+%                 
+%                 crossingPoints = [crossingPoints; firstNewCrossingPoint; secondNewCrossingPoint];
+%                
+%                 nextAdditionalEdge.Lat = [firstX, secondX];
+%                 nextAdditionalEdge.Lon = [firstY, secondY];
+%                 nextAdditionalEdge.Geometry = 'Line';
+%                 
+%                 additionalEdges = [additionalEdges; nextAdditionalEdge];
                 
          
             end
         end
     end
+    disp('Number of crossings: ')
+    disp(j)
     
-    j
+
+    
+    firstPoints = [];
+    lastPoints = [];
+    
+    % calculate the first and last points of one polyline
+    for index = 1:length(shapefile)
+        newFirstPoint.Lat = shapefile(index,:).Lat(1);
+        newFirstPoint.Lon = shapefile(index,:).Lon(1);
+        newFirstPoint.Geometry = 'Point';
+        
+        firstPoints = [firstPoints; newFirstPoint];
+        
+        newLastPoint.Lat = shapefile(index,:).Lat(end-1);
+        newLastPoint.Lon = shapefile(index,:).Lon(end-1);
+        newLastPoint.Geometry = 'Point';
+        
+        lastPoints = [lastPoints; newLastPoint];
+    end
     
     geoshow(shapefile, 'Color', 'green')
-    geoshow(crossingPoints, 'Color', 'red', 'Marker', 'x', 'Markersize', 10)
+    geoshow(crossingPoints, 'Color', 'green', 'Marker', 'o', 'Markersize', 10)
     geoshow(additionalEdges, 'Color', 'blue')
+    geoshow(firstPoints, 'Color', 'green', 'Marker', 'x', 'Markersize', 15)
+    geoshow(lastPoints, 'Color', 'blue', 'Marker', '+', 'Markersize', 15)
+    
   
     
 

@@ -27,13 +27,9 @@ function outputRoads = transformShapeFileToGeocoordinates(shapeFile, tifFile, un
 
         boundingBox = roads(roadIndex).BoundingBox * uRatio;
 
-        roadLength = roads(roadIndex).LENGTH * uRatio;
-
         % write to the new shape file
         [bb1, bb2] = projinv(info, boundingBox(:,1), boundingBox(:,2));
         outputRoads(roadIndex).BoundingBox = [bb1(1), bb2(1); bb1(2), bb2(2)];
-
-        outputRoads(roadIndex).LENGTH = roadLength;
 
         [lat, lon] = projinv(info, x, y);
         outputRoads(roadIndex).Lat = lat;

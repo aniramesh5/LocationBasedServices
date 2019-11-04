@@ -54,4 +54,18 @@ load('./adjacent/boston_highways.mat', 'adjacent');
 shapefile = shaperead('./shapefile/geocoord/boston_highways.shp', 'UseGeoCoords', true);
 
 testShapeFile(adjacent, shapefile)
+
+
+%% create test workspace
+
+adjacent = [0 0 0 2 0 0;
+                0 0 1 0 2 0;
+                0 1 0 0 1 2;
+                2 0 0 0 0 0;
+                0 2 1 0 0 1;
+                0 0 2 0 1 0];
+            
+currentNode = 2;
+            
+            
 end

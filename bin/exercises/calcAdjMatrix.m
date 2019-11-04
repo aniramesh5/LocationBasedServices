@@ -2,7 +2,7 @@ function adjacent = calcAdjMatrix(shapefile)
 
 numberOfRoads = length(shapefile);
 
-treshold = 10;
+treshold = 1;
 
 startAndEndPoints = zeros(2 * numberOfRoads, 2);
 adjacent = zeros(2*numberOfRoads);

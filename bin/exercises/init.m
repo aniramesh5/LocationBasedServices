@@ -25,6 +25,9 @@ shapewrite(shapefile_highways, strcat('./shapefile/original/', shapefileName, '_
 
 shapefileName = "boston";
 
+shapeFile = transformShapeFileToGeocoordinates(strcat('./shapefile/',shapefileName, '_original.shp'), 'boston.tif', 'survey feet','meter');
+shapewrite(shapeFile, strcat('./shapefile/',shapefileName, '_original.shp'));
+
 % transforming NAD83 coordinate (survey feet) to geocoordinates (meter)
 shapeFile = transformShapeFileToGeocoordinates(strcat('./shapefile/original/',shapefileName, '_boundingBox.shp'), 'boston.tif', 'survey feet','meter');
 shapewrite(shapeFile, strcat('./shapefile/geocoord/',shapefileName, '_boundingBox.shp'));
@@ -39,6 +42,9 @@ shapewrite(shapeFile, strcat('./shapefile/geocoord/',shapefileName, '_locals.shp
 
 shapefileName = "boston";
 
+adjacent = shapefileToAdjMatrix(strcat('./shapefile/',shapefileName, '_original.shp'));
+save(strcat('./adjacent/',shapefileName, '_original.mat'), 'adjacent');
+
 adjacent = shapefileToAdjMatrix(strcat('./shapefile/original/',shapefileName, '_boundingBox.shp'));
 save(strcat('./adjacent/',shapefileName, '_boundingBox.mat'), 'adjacent');
 
@@ -47,13 +53,6 @@ save(strcat('./adjacent/',shapefileName, '_highways.mat'), 'adjacent');
 
 adjacent = shapefileToAdjMatrix(strcat('./shapefile/original/',shapefileName, '_locals.shp'));
 save(strcat('./adjacent/',shapefileName, '_locals.mat'), 'adjacent');
-
-addpath('./tests')
-load('./adjacent/boston_highways.mat', 'adjacent');
-
-shapefile = shaperead('./shapefile/geocoord/boston_highways.shp', 'UseGeoCoords', true);
-
-testShapeFile(adjacent, shapefile)
 
 
 %% create test workspace

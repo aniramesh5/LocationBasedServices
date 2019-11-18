@@ -1,4 +1,4 @@
-function aStar(startNodeIndex, endNodeIndex, shapefile, adjacent)
+function calculateConnectedGraph(startNodeIndex, shapefile, adjacent)
 
 %% initialize environment
 if nargin == 0
@@ -6,17 +6,14 @@ if nargin == 0
     % boundingbox
     % dataSet = 'boundingBox';
     % startNodeIndex = 15;
-    % endNodeIndex = 295;
 
     % locals
     % dataSet = 'locals';
     % startNodeIndex = 300;
-    % endNodeIndex = 4000;
 
     % highways
     dataSet = 'highways';
     startNodeIndex = 10;
-    endNodeIndex = 321;
 
     adjacentPath = strcat('./adjacent/boston_', dataSet, '.mat');
     shapefilePath = strcat('./shapefile/geocoord/boston_', dataSet, '.shp');
@@ -27,15 +24,14 @@ end
 
 showStatus = false; % plot the shapefile, open/closed Nodes etc.
 
-noSolution = false;
-bestSolutionFound = false;
+nodesLeft = false;
 
 [allNodes, openNodes, closedNodes] = initAStar(shapefile, adjacent, startNodeIndex);
 
 %% a star loop
 tic
 
-while ~noSolution && ~bestSolutionFound
+while ~nodesLeft
     currentNodeIndex = getBestSuccessor(openNodes, allNodes);
     indexOfCurrentNodeIndexInOpenNodes = find(openNodes == currentNodeIndex);
     
@@ -43,18 +39,14 @@ while ~noSolution && ~bestSolutionFound
     openNodes(indexOfCurrentNodeIndexInOpenNodes) = []; % delete current node from openNodes to prevent feedback
     closedNodes = [currentNodeIndex, closedNodes];
     
-    if currentNodeIndex == endNodeIndex
-        bestSolutionFound = true;
-    end
-    
-    [openNodes, allNodes] = updateOpenNodes(currentNodeIndex, endNodeIndex, openNodes, closedNodes, allNodes, adjacent);
+    [openNodes, allNodes] = updateOpenNodes(currentNodeIndex, startNodeIndex, openNodes, closedNodes, allNodes, adjacent);
     
     if isempty(openNodes)
-        noSolution = true;
+        nodesLeft = true;
     end
     
     if showStatus
-        showAStarStatus(openNodes, closedNodes, shapefile, currentNodeIndex, endNodeIndex, startNodeIndex)
+        showAStarStatus(openNodes, closedNodes, shapefile, currentNodeIndex, startNodeIndex, startNodeIndex)
     end
 end
 
@@ -62,13 +54,11 @@ toc
 
 %% show output
 
-if ~noSolution
-    disp("Route found!")
-    showAStarStatus(openNodes, closedNodes, shapefile, currentNodeIndex, endNodeIndex, startNodeIndex)
-    showFinalRoute(allNodes, endNodeIndex, startNodeIndex, shapefile)
-else
-    disp("No Solution")
-    showAStarStatus(openNodes, closedNodes, shapefile, currentNodeIndex, endNodeIndex, startNodeIndex)
-end
+connectedGraphIndex = mod(closedNodes-1, length(shapefile))+1;
+
+connectedGraph = shapefile(connectedGraphIndex);
+geoshow(shapefile, 'Color', 'Black');
+geoshow(connectedGraph, 'Color', 'Green')
+
 
 end

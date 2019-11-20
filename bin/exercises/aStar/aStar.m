@@ -25,7 +25,15 @@ if nargin == 0
     shapefile = shaperead(shapefilePath, 'UseGeoCoords', true);
 end
 
-showStatus = false; % plot the shapefile, open/closed Nodes etc.
+showStatus = true; % plot the shapefile, open/closed Nodes etc.
+
+videoPath = 'video.avi';
+writerObj = VideoWriter(videoPath);
+writerObj.FrameRate = 10;     
+
+open(writerObj);
+
+
 
 noSolution = false;
 bestSolutionFound = false;
@@ -54,9 +62,12 @@ while ~noSolution && ~bestSolutionFound
     end
     
     if showStatus
-        showAStarStatus(openNodes, closedNodes, shapefile, currentNodeIndex, endNodeIndex, startNodeIndex)
+        showAStarStatus(openNodes, closedNodes, shapefile, currentNodeIndex, endNodeIndex, startNodeIndex);
+        myFrame = getframe(gcf);
+        writeVideo(writerObj, myFrame);
     end
 end
+close(writerObj)
 
 toc
 

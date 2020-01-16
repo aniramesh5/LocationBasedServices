@@ -1,4 +1,4 @@
-function aStar(startNodeIndex, endNodeIndex, shapefile, adjacent)
+function [route, success] = aStar(startNodeIndex, endNodeIndex, shapefile, adjacent)
 
 %% initialize environment
 if nargin == 0
@@ -9,14 +9,19 @@ if nargin == 0
     % endNodeIndex = 295;
 
     % locals
-    % dataSet = 'locals';
-    % startNodeIndex = 300;
-    % endNodeIndex = 4000;
+    dataSet = 'locals';
+    startNodeIndex = 100;
+    endNodeIndex = 2020;
+    
+    
+    dataSet = 'original';
+    startNodeIndex = 100;
+    endNodeIndex = 2020;
 
     % highways
-    dataSet = 'highways';
-    startNodeIndex = 10;
-    endNodeIndex = 321;
+%     dataSet = 'highways';
+%     startNodeIndex = 10;
+%     endNodeIndex = 321;
 
     adjacentPath = strcat('./adjacent/boston_', dataSet, '.mat');
     shapefilePath = strcat('./shapefile/geocoord/boston_', dataSet, '.shp');
@@ -25,9 +30,9 @@ if nargin == 0
     shapefile = shaperead(shapefilePath, 'UseGeoCoords', true);
 end
 
-showStatus = true; % plot the shapefile, open/closed Nodes etc.
+showStatus = false; % plot the shapefile, open/closed Nodes etc.
 
-videoPath = 'video.avi';
+videoPath = 'aStar-video.avi';
 writerObj = VideoWriter(videoPath);
 writerObj.FrameRate = 10;     
 
@@ -75,11 +80,12 @@ toc
 
 if ~noSolution
     disp("Route found!")
-    showAStarStatus(openNodes, closedNodes, shapefile, currentNodeIndex, endNodeIndex, startNodeIndex)
-    showFinalRoute(allNodes, endNodeIndex, startNodeIndex, shapefile)
+    success = true;
+    [route] = getFinalRoute(allNodes, endNodeIndex, shapefile);
 else
     disp("No Solution")
-    showAStarStatus(openNodes, closedNodes, shapefile, currentNodeIndex, endNodeIndex, startNodeIndex)
+    success = false;
+    route = [];
 end
-
+    showAStarStatus(openNodes, closedNodes, shapefile, currentNodeIndex, endNodeIndex, startNodeIndex);
 end

@@ -1,4 +1,4 @@
-function [bestMatchIndex] = p2pMatching(latSelected, lonSelected, shapefile)
+function [bestMatchIndex, bestCoordinate] = p2pMatching(latSelected, lonSelected, shapefile)
 
 bestMatchIndex = -1;
 shortestDistance = inf;
@@ -16,6 +16,7 @@ for nodeIndex = 1:numberOfNodes
     if distanceToNode < shortestDistance
         bestMatchIndex = nodeIndex;
         shortestDistance = distanceToNode;
+        bestCoordinate = [lat, lon];
     end
     
     

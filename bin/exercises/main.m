@@ -126,18 +126,14 @@ pause(5)
 showFinalRoute(allNodes, endNodeIndex, endHighwayInOriginalNodeIndex, original, routeToEnd)
 pause(5)
 
-% getClosest on highway from end
+%% calculate laplace matrix
 
-% getNodeInOriginal from startHighway
-% getNodeInOriginal from endHighway
+addpath('./laplace');
 
-% calc a* from start to startHighway
-% calc a* from startHighway to endHighway
-% calc a* from endHighway to end
+dataSet = 'highways';
+adjacentPath = strcat('./adjacent/boston_', dataSet, '.mat');
+adjacent = load(adjacentPath, 'adjacent').adjacent;
 
-
-
-
-
+laplaceMatrix = laplace(adjacent)
 
 end

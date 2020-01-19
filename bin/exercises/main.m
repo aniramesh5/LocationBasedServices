@@ -7,7 +7,7 @@ geoshow('./data/boston_snippet.png')
 %geoshow([shapeFile.X],[shapeFile.Y], 'Color', 'blue')
 
 boston_roads_geocoord = shaperead('./shapefile/geocoord/boston_original.shp','UseGeoCoords', true);
-geoshow(boston_roads_geocoord, 'Color', 'blue') 
+geoshow(boston_roads_geocoord, 'Color', 'blue')
 
 %% test shapefile with adjacent matrix
 addpath('./tests')
@@ -129,11 +129,6 @@ pause(5)
 %% calculate laplace matrix
 
 addpath('./laplace');
-
-dataSet = 'highways';
-adjacentPath = strcat('./adjacent/boston_', dataSet, '.mat');
-adjacent = load(adjacentPath, 'adjacent').adjacent;
-
-laplaceMatrix = laplace(adjacent)
+runLaplace()
 
 end

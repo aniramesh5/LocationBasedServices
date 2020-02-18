@@ -6,72 +6,279 @@
 
 
 \subsection{Begriffe}
-Wie lassen sich die folgenden Begriffe (grob) und in Hinblick auf die zu erstellende NaviApp erläutern?
+How can the following term be defined with respect to the topic of a navigation app?
 
 \begin{description}
-	\item[Dijkstra] Langsamer routenfindungsalgorithmus, welcher die kürzerste Route findet
-	\item[A*] Wie Dijkstra, aber schneller dank Heuristik welche bestimmt ob der nächste Knoten in der richtigen Richtung liegt
-	\item[Zusammenhängender Graph] Jeder Knoten ist über eine Folge von Kanten zu erreichen.
-	\item[(ESRI) World File] The generic meaning of the six parameters in a world file (as defined by Esri[1]) is:
-Definition der Affin-transformation
+    \item[Dijkstra] A relative slow routefinding algorithm, which can be find the shortest path.
+    \item[A*] Wie Dijkstra, aber schneller dank Heuristik welche bestimmt ob der nächste Knoten in der richtigen
+    Richtung liegt
+    \item[Zusammenhängender Graph] Jeder Knoten ist über eine Folge von Kanten zu erreichen.
+    \item[(ESRI) World File] The generic meaning of the six parameters in a world file
+    (as defined by \href{https://www.esri.com/en-us/home}{Esri}\cite{ESRI}) is:
+    Definition der Affintransformation
 
-\begin{itemize}
-	\item Line 1: A: pixel size in the x-direction in map units/pixel
-	\item Line 2: D: rotation about y-axis
-	\item Line 3: B: rotation about x-axis
-	\item Line 4: E: pixel size in the y-direction in map units, almost always negative
-	\item Line 5: C: x-coordinate of the center of the upper left pixel
-	\item Line 6: F: y-coordinate of the center of the upper left pixel
-\end{itemize}
+    \begin{itemize}
+        \item Line 1: A: pixel size in x-direction in map units/pixel
+        \item Line 2: D: rotation about y-axis
+        \item Line 3: B: rotation about x-axis
+        \item Line 4: E: pixel size in the y-direction in map units, almost always negative
+        \item Line 5: C: x-coordinate of the center of the upper left pixel
+        \item Line 6: F: y-coordinate of the center of the upper left pixel
+    \end{itemize}
 
-	\item [Georeferenzieren] Das zuordnen von Daten zu Geodaten (Koordinaten)
-	
-	\item[Laplace Matrix] ist in der Graphentheorie eine Matrix, welche die Beziehungen der Knoten und Kanten eines Graphen beschreibt. Sie wird unter anderem zur Berechnung der Anzahl der Spannbäume und zur Abschätzung der Expansivität regulärer Graphen benutzt. Sie ist eine diskrete Version des Laplace-Operators. Man kann durch diese bestimmen, ob wir einen Zusammenhängenden Graphen haben.
-	
-	\item[Satz von Fiedler] Beschreibt wieviele Knoten ich habe.
-	
-	\item[k-d Baum] ein k-dimensionaler Baum. Er kann leicht unbalanciert sein und in unserer Anwendung ist es eher ein $k^{2}$ Baum.
-	
-	\item[Kachelung einer Karte] Überführen der Karte in kleinere Teile welche die Kacheln darstellen. Die Kacheln können auch thematisch sein. Z.b. Highways und Urban.
-	
-	\item[Ameisenalgorithmus] gehört zu den Metaheuristiken für Verfahren der kombinatorischen Optimierung, die auf dem modellhaften Verhalten von realen Ameisen bei der Futtersuche basieren. Die meisten Ameisenalgorithmen erfüllen auch die von Marco Dorigo vorgestellte ACO (Ant Colony Optimization)-Metaheuristik. 
-	
-	\item[Adjazenzmatrix] eines Graphen ist eine Matrix, welche Knoten des Graphen durch eine Kante verbunden sind. Sie besitzt für jeden Knoten eine Zeile und eine Spalte, woraus sich für n Knoten eine $n\times n$-Matrix ergibt. Ein Eintrag in der i-ten Zeile und j-ten Spalte gibt hierbei an, ob eine Kante von dem i-ten zu dem j-ten Knoten führt. Steht an dieser Stelle eine 0, ist keine Kante vorhanden – eine 1 gibt an, dass eine Kante existiert[1], siehe Abbildung rechts.
-	
-	\item[Adjazenzlisten] (oder auch Nachbarschaftslisten) eine Möglichkeit, Graphen zu repräsentieren. Dabei wird für jeden Knoten eine Liste, die Adjazenzliste, aller seiner Nachbarn (in ungerichteten Graphen) bzw. Nachfolger (in gerichteten Graphen) angegeben. Oft basieren Datenstrukturen für Graphen auf Adjazenzlisten. Im einfachsten Fall wird in einem Array für jeden Knoten eine einfach verkettete Liste aller Nachbarn gespeichert.
-
-	\item[Shapefile] Vektorielle Geodaten welche nach "Themen" in verschiedenen Datein gespeichert ist.
-	
-	\item[Mapmatching] beschreibt das abgleichen der gemessenen Daten mit einer gespeicherten Karten. Beides kann Fehler haben.
+    \item [Georeferenzieren] Das zuordnen von Daten zu Geodaten (Koordinaten)
+    \item[Laplace Matrix] ist in der Graphentheorie eine Matrix, welche die Beziehungen der Knoten und Kanten eines
+    Graphen beschreibt.
+    Sie wird unter anderem zur Berechnung der Anzahl der Spannbäume und zur Abschätzung der
+    Expansivität regulärer Graphen benutzt.
+    Sie ist eine diskrete Version des Laplace-Operators. Man kann durch diese
+    bestimmen, ob wir einen Zusammenhängenden Graphen haben.
+    \item[Satz von Fiedler] Beschreibt wieviele Knoten ich habe.
+    \item[k-d Baum] ein k-dimensionaler Baum.
+    Er kann leicht unbalanciert sein und in unserer Anwendung ist es eher
+    ein $k^{2}$ Baum.
+    \item[Kachelung einer Karte] Überführen der Karte in kleinere Teile welche die Kacheln darstellen. Die Kacheln
+    können auch thematisch sein. Z.b. Highways und Urban.
+    \item[Ameisenalgorithmus] gehört zu den Metaheuristiken für Verfahren der kombinatorischen Optimierung, die auf dem
+    modellhaften Verhalten von realen Ameisen bei der Futtersuche basieren.
+    Die meisten Ameisenalgorithmen erfüllen
+    auch die von Marco Dorigo vorgestellte ACO (Ant Colony Optimization)-Metaheuristik.
+    \item[Adjazenzmatrix] eines Graphen ist eine Matrix, welche Knoten des Graphen durch eine Kante verbunden sind.
+    Sie besitzt für jeden Knoten eine Zeile und eine Spalte, woraus sich für n Knoten eine $n\times n$-Matrix ergibt.
+    Ein Eintrag in der i-ten Zeile und j-ten Spalte gibt hierbei an, ob eine Kante von dem i-ten zu dem j-ten Knoten führt.
+    Steht an dieser Stelle eine 0, ist keine Kante vorhanden - eine 1 gibt an, dass eine Kante existiert, siehe Abbildung rechts.
+    \item[Adjazenzlisten] (oder auch Nachbarschaftslisten) eine Möglichkeit, Graphen zu repräsentieren.
+    Dabei wird für jeden Knoten eine Liste, die Adjazenzliste, aller seiner Nachbarn (in ungerichteten Graphen) bzw.
+    Nachfolger (in gerichteten Graphen) angegeben.
+    Oft basieren Datenstrukturen für Graphen auf Adjazenzlisten.
+    Im einfachsten Fall wird in einem Array für jeden Knoten eine einfach verkettete Liste aller Nachbarn gespeichert.
+    \item[Shapefile] Vektorielle Geodaten welche nach "Themen" in verschiedenen Datein gespeichert ist.
+    \item[Mapmatching] beschreibt das abgleichen der gemessenen Daten mit einer gespeicherten Karten.
+    Beides kann Fehler haben.
 \end{description}
 
 
 \subsection{Mapping Toolbox}
-(nicht im Skript )
 
 Wie lassen sich die einzelnen Schritte aus Aufgabe P1-A1 (von projizierten NAD83 Koordinaten zu geographischen Koordinaten) stichpunktartig erläutern?\\
 Wie lassen sich folgende Funktionen und Methoden erläutern?
 
 \begin{description}
-	\item[Unitsration] Umrechnung von einer Einheit in andere Einheit für dieses Shapefile
-	\item[Geoshow] Darstellung von Geographischen koordinaten
-	\item[Mapshow] Darstellung von Kartendaten welche Projezierten Daten, welche z.B. von Shapefiles kommen, entsprechen
-	\item[projinv] (mit Angabe der Übergabeparameter) Macht die Projektion, welche zur Map führt wieder rückgängig.
-	\item[geotiffinfo] (mit Angabe der Übergabeparameter) Enthält die Projektionsparameter für das zugrundelegende Tiff. Diese Prarameter können dann in projinv verwendet werden.
-	\item[shaperead] Vermutlich externe bib, welche shape-Datein einliest und die Möglichkeit bietet die Daten beim einlesen schon zu filter.
-	\begin{lstlisting}[caption=shaperead.m, language=matlab, label=shaperead]
-	S = shaperead('concord_roads.shp','Selector',... 
-	{@(v1,v2) (v1 >= 4) && (v2 >= 200),'CLASS','LENGTH'} )
-	\end{lstlisting}
-	
+    \item[Unitsration] Umrechnung von einer Einheit in andere Einheit für dieses Shapefile
+    \item[Geoshow] Darstellung von Geographischen koordinaten
+    \item[Mapshow] Darstellung von Kartendaten welche Projezierten Daten, welche z.B. von Shapefiles kommen, entsprechen
+    \item[projinv] (mit Angabe der Übergabeparameter) Macht die Projektion, welche zur Map führt wieder rückgängig.
+    \item[geotiffinfo] (mit Angabe der Übergabeparameter) Enthält die Projektionsparameter für das zugrundelegende Tiff. Diese Prarameter können dann in projinv verwendet werden.
+    \item[shaperead] Vermutlich externe bib, welche shape-Datein einliest und die Möglichkeit bietet die Daten beim einlesen schon zu filter.
+    \begin{lstlisting}[caption=shaperead.m, language=matlab, label=shaperead]
+        S = shaperead('concord_roads.shp','Selector',...
+        {@(v1,v2) (v1 >= 4) && (v2 >= 200),'CLASS','LENGTH'} )
+    \end{lstlisting}
+
 \end{description}
 
 \chapter{2. Lehrveranstaltung}
 \label{ch:2.-lehrveranstaltung}
 
 \section{WorldFile}
-
 Siehe Kapitel \ref{sec:worldfile}.
 
-Platzhalter: \cite{adams2009hitchhikers}
+\chapter{3. Lehrveranstaltung}
+\label{ch:3.-lehrveranstaltung}
 
+\begin{description}
+    \item[Graph] Datenstruktur aus Knoten (z.B. Kreuzungen) und Kannten (Strassen).
+    Es gibt zwei unter Kategorien:
+    \begin{enumerate}
+        \item Gewichtete Kanten können ein Gewicht haben. (z.B. Stau, Länge etc.)
+        \item Gerichter Graph hat Kannten, welche nur in eine Richtung gültig sind.
+    \end{enumerate}
+    \item[Adjazenzmatrix/-List] Sind Datenstrukturen zur Abspeicherung eines (gewichteten) gerichteten Graphen.
+    \item[Adjazenzmatrix] Datenstruktur zur Speicherung eines Graphen in einer $n x n$ Matrix. n für die Anzahl der Knoten.
+    Sei (i,j) eine Kante von Knoten $k_i$ nach $k_j$ und bezeichne $w_{i,j}$ das Gewicht der Kante. Dann setze $A_{i,j} = w_{i,j}$,
+    sonst $A_{i,j} = 0$; \\ $A_{j,i} = w_{j,i}$. \\
+    Vorteile: Schneller Zugriff \\
+    Nachteil: Hoher Speicherbedarf
+    \item[Adjazenzlist] ist eine Datenstruktur die einen Graphen in einer dynamischen, verketteten Liste realisiert, welche eine Liste aller Knoten als Basis verwendet. \\
+    Vorteil: Niedriger Speicherbedarf \\
+    Nachteil: Langsamer Zugriff
+\end{description}
+
+In Pseudocode: Einen Algorithmus entwickeln, der aus dem Shapefile eine Adjazenzmatrix generiert
+
+Ziel des Algorithmus ShapeToA-Matrix: A-Matrix m.d.E., dass die knoten so nummeriert werden, dass in das Shapefile zurück gerechnet werden kann. \\
+
+1.Schritt:
+Alle Strassensegmente unabhängig voneinander als Kannte in die A-Matrix einfügen. Größe der Matrix: $2n x 2n$.
+
+2. Schritt:
+Dann vergleichen wir alle Start und Endpunkte aus dem Shapefile vergleichen und nach Kreuzungen suchen.
+Wenn eine Kreuzung gefunden, diese als Kannte in A Matrix einführen.
+
+
+Generell: L (Startkannte(i);... ;Endknoten(i);...)
+
+\begin{lstlisting}[caption=Pseudocode for ajacent creation, language=matlab, label=shaperead]
+    % Fuer alle Strassensegmente
+    for roadIndex = 1: length(roads)
+    L(roadIndex) = roads(roadIndex).Startknoten
+    L(roadIndex + length(roads)) = roads(roadIndex).Endknoten
+
+    % Markiere Kante in A-Matrix
+    A(roadIndex, roadIndex+length(roads)) = weight
+    A(roadIndex+length(roads), roadIndex) = weight
+    end
+
+    % Vergleiche alle Knoten aus L miteinander
+    for i = 1 : length(L)-l
+    for j = i+1 : length(L)
+    if(L(i) && L(j) nah beieinander)
+    Kannte in A Matrix
+    A(i,j) = A(j,i) = w;
+    end
+    end
+\end{lstlisting}
+
+
+\chapter{Lesson 4 - Routeplaning}
+
+\begin{labeling}{Objective:}
+    \item[Given:] Streetmap as shapefile with matching adjacent matrix.
+    \item[Question:] Path to destination with respect to different criteria for the route and used paths.
+\end{labeling}
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{l l}
+        \textbf{Path Criteria} & \textbf{Route Criteria}  \\[0.5em]
+        Geometry & Fastest \\
+        Traffic & Shortest \\
+        Toll & Cheapest \\
+        One way rules & Eco \\
+        Streettypes & \\
+        Driving ban & \\
+    \end{tabular}
+    \caption{Criteria for Routeplaning}
+    \label{tbl:criteriaRouteplaning}
+\end{table}
+
+\section{Tasks}
+\label{sec:tasks}
+\begin{description}
+    \item[Identification from crossings] is the first step in the preprocessing of routeplaing.
+    This is necessary because the single entries $s$ in the shapefile (Chapter:~\ref{ch:shapefile}) are not connected with each other.
+    The result is an adjacent $n \times n$ matrix with $n = 2 \cdot s$.
+    \item[Weighting] of edges between two nodes describes how expensive the path between two nodes is.
+    Depending on thee route criteria (Table:~\ref{tbl:criteriaRouteplaning})
+    \item[Pathfinding] is solving question \textit{\lq\lq{What is the lightest path to my destination?}\lq\lq{}} as a \lq\lq{}shortest path problem\rq\rq{} (Section~\ref{sec:important-terms}).
+\end{description}
+
+\section{Important Terms}
+\label{sec:important-terms}
+\begin{description}
+    \item[Shortest Path Problem] (spp) with respect to a graph is the problem of finding the lightes connected path from Point $A$ to Point $B$.
+    \item[Breadth first search] (German: Breitensuche) is an algorithm to go through the whole level of a tree before going one level deeper instead of finishing each branch separately.
+    \item[Node] is a datastructure which holds a pointer to the following node and a distance to the start $g$.
+    \item[Estimation to destination] often named as $h$ is the estimated distance to the destination.
+    The most used heuristic is the linear distance.
+    \item[unknown list] contains all nodes with known $h$ to the destination.
+    \item[open list] contains all nodes where $h$ and $g$ are known.
+    \item[closed list] contains all nodes where all neighbor are not in unknown list.
+\end{description}
+
+\section{Algorithm}\label{sec:algorithm}
+
+\subsection{Solving shortest path problem with breadth first search}
+\label{subsec:solving-spp-with-breadth-first-search}
+
+\begin{lstlisting}[caption=Solving shortest path problem with breadth first search, label=lst:sppWithBreadthFirstSearch]
+save startNode in queue
+
+for node in queue
+    explore successors
+    safe all successors in queue
+\end{lstlisting}
+
+\subsubsection*{Contra}
+Not efficient because it does not consider the direction.
+
+\subsection{Dijkstra Algorithm}\label{subsec:dijkstra-algorithm}
+
+\subsubsection*{Init}
+\begin{lstlisting}[caption=Dijkstra Algorithm - Init, label=lst:DijkstraAlgorithmInit]
+init()
+    create list of nodes with attribute:
+        Distance to start and successors
+
+    create empty closedList
+    create empty openList
+    set distance to startnode of startNote to 0
+    add startNode to openList
+\end{lstlisting}
+
+\newpage
+
+\subsubsection*{Update openList}
+\begin{lstlisting}[caption=Dijkstra Algorithm - Update openList, label=lst:DijkstraAlgorithmUpdateOpenList]
+updateOpenList(currentNode)
+
+    for each successor of current Node
+        altDis = currentNode.getDistance + distance(current, successor)
+
+        if altDis < successor.getDistance
+            successor.setDistance(altDis)
+            successor.prev = currentNode
+
+        add successor to openList
+\end{lstlisting}
+
+\subsubsection*{Main}
+\begin{lstlisting}[caption=Dijkstra Algorithm - Main, label=lst:DijkstraAlgorithmUpdateMain]
+init()
+
+while openList is not empty
+    currentNode = node with min(distance) from openList
+    remove currentNode from openList
+    add currentNode to closedList
+    updateOpenList(currentNode)
+
+calculate Path by following prev
+\end{lstlisting}
+
+\subsection{A*}\label{subsec:a*}
+The A* algorithm is very similar to Dijkstra (Section~\ref{subsec:dijkstra-algorithm}) but it considers the estimated distance to destination.
+
+\subsubsection*{Init}
+\begin{lstlisting}[caption=A* Algorithm - Init, label=lst:AStarAlgorithmInit]
+create list of nodes with attribute:
+    Distance to start,
+    estimated distance to destination,
+    heuristic,
+    prev and
+    successors
+
+create empty closedList
+create empty openList
+set distance to startNode of startNote to 0
+calculate estimated distance to destination
+set heuristic to sum(estimated distance, distance to startNode)
+add startNode to openList
+\end{lstlisting}
+
+\subsubsection*{Update openList}
+\begin{lstlisting}[caption=A* Algorithm - Update openList, label=lst:AStarAlgorithmUpdateOpenList]
+    updateOpenList(currentNode)
+
+    for each successor of current Node
+        altDis = currentNode.getDistance + distance(current, successor)
+
+        calculate estimated distance to destination
+        if altDis < successor.getDistance and successor is not in openList
+            successor.setDistance(altDis)
+            successor.prev = currentNode
+            update successor.heuristic
+
+            add successor to openList
+\end{lstlisting}
+\begin{lstlisting}[caption=A* Algorithm, language=matlab, label=lst:AStarAlgorithmInit]
+\end{lstlisting}

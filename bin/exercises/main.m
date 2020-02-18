@@ -62,6 +62,8 @@ aStar(startNodeIndex, endNodeIndex, shapefile, adjacent)
 
 %% astar with locals - highway - locals
 
+addpath('./aStar')
+
 % getting shape and adjacent
 dataSet = 'highways';
 adjacentPath = strcat('./adjacent/boston_', dataSet, '.mat');
@@ -97,6 +99,13 @@ disp("End Point")
 
 [endHighwayInOriginalNodeIndex, endHighwayInOriginalCoordinate] = p2pMatching(endHighwayCoordinate(1), endHighwayCoordinate(2), original);
 
+    videoPath = 'wegmittel.avi';
+    writerObj = VideoWriter(videoPath);
+    writerObj.FrameRate = 1;     
+
+    open(writerObj);
+
+
 routingPoints = [
                  startNodeIndex, ...
                  endNodeIndex, ...
@@ -105,7 +114,8 @@ routingPoints = [
                  ];
 
 showRoutingPoints(routingPoints, original)
-
+        myFrame = getframe(gcf);
+        writeVideo(writerObj, myFrame);
 pause(5)
 
 [routeToHighway, wasSuccessfullFromStartToHighway] = aStar(startNodeIndex, startHighwayInOriginalNodeIndex, original, adjacentOriginal);
@@ -118,13 +128,21 @@ allNodes = getNodesFromShapefile(original);
 
 % show routeToHighway
 showFinalRoute(allNodes, startHighwayInOriginalNodeIndex, startNodeIndex, original, routeToHighway)
+        myFrame = getframe(gcf);
+        writeVideo(writerObj, myFrame);
 pause(5)
 % show routeOnHighway
 showFinalRoute(allNodes, endHighwayNodeIndex, startHighwayNodeIndex, highways, routeOnHighway)
+        myFrame = getframe(gcf);
+        writeVideo(writerObj, myFrame);
 pause(5)
 % show routeOnHighway
 showFinalRoute(allNodes, endNodeIndex, endHighwayInOriginalNodeIndex, original, routeToEnd)
+        myFrame = getframe(gcf);
+        writeVideo(writerObj, myFrame);
 pause(5)
+
+close(writerObj)
 
 %% calculate laplace matrix
 

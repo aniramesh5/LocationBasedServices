@@ -1,4 +1,4 @@
-function deadEnds = numberOfDeadends(laplace)
+function deadEnds = numberOfDeadEnds(laplace)
     deadEnds = 0;
     for i = 1: length(laplace)
         if laplace(i,i) == 1

@@ -1,0 +1,52 @@
+MST: Minimal spannenden Baum
+
+
+algorithmus:
+    Input: zusammenhängender, ungerichteter, kantengewichteter Graph
+
+so wie möglich:
+    - wähle unter der noch nicht ausgewählten Kanten, diejenige mit minimalen Gewicht
+    - wenn die ausgeählte Kante keinen Kreis bildet, so fügen sie in den MST ein
+
+output MST
+
+Problem
+wie kann ein Kreis detektiert werden?
+
+Idee:
+    jeder aktive Knoten bekommt eine "Baum_ID"
+
+    a) Bildet die gewählte Kante einen neuen Teilbaum, so bekommt sie neue Baum_ID
+    b) kommt eine Kante an die Reihe, die zwei teilbäume miteinander verbindet, so werden ihre Baum_IDs aktualisiert
+    c) wird eine Kante geählt, deren Knoten zur selben Baum_ID, so wird die Kante verworfen
+    d) gehört ein Knoten zu einer Baum_ID un der andere knoten noch zu keiner Baum_ID, so bekommt dieser die BAum_ID des ersten Knotens
+
+code:
+
+MST = mst_kruskal(A) % beide adjacent Matrix
+
+% Aus A: Liste aller Kanten mit gewichten
+L = [...; [i,j,w], ...]
+%default Baum ID; dim(Baum_ID) = #Knoten
+Baum_ID=[-1,...,-1]
+while(true)
+    if size(L)==0
+        break;
+    [i,j,w] = min(L,w)
+    % j keine baum_ID, i schon
+    if (Baum_ID[j] == -1 && Baum_ID[i] >= 0)
+        Baum_ID[j] = Baum_ID[i]
+        MST(i,j) = M(j,i) = w
+    % umgedrehter fall auch noch
+    else if()
+    %beide haben schon eine Baum ID
+    else if(Baum_ID[i]==Baum_ID_[j] && Baum_ID[i] >= 0)
+        print('kreis)
+    else if(Baum_ID[i] != Baum_ID[j])
+        replace(Baum_ID, Baum_ID(i),Baum_ID(j))
+        MST(i,j) = MST(j,i) = w
+    else
+        Baum_ID[i] = Baum_ID[j] = nex_ID++;
+        MST(i,j) = MST(j,i) = w
+end
+

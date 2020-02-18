@@ -2,7 +2,6 @@ function shape = getShapeFromIndex(list,shapefile)
     shape = [];
     
     for index = list
-        
         if(index <= length(shapefile))
             newShape.Lat = shapefile(index).Lat(1);
             newShape.Lon = shapefile(index).Lon(1);
@@ -16,5 +15,4 @@ function shape = getShapeFromIndex(list,shapefile)
         shape = [shape; newShape];
     
     end
-
 end
